@@ -95,7 +95,7 @@ export default function Tenders() {
                       <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => {
                         const id = duplicate(t.id); if (id) { toast.success("Tender duplicated"); navigate(`/tenders/${id}`); }
                       }}><Copy className="w-3.5 h-3.5" /></Button>
-                      <Button size="icon" variant="ghost" className="h-8 w-8 text-danger hover:text-danger"
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-danger hover:text-accent-foreground"
                         onClick={() => { remove(t.id); toast.success("Tender deleted"); }}
                       ><Trash2 className="w-3.5 h-3.5" /></Button>
                     </div>

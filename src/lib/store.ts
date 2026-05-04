@@ -3,7 +3,7 @@ import {
   Tender, Project, Purchase, Worker, WorkerAssignment, Expense,
   MaterialLine, MaterialStatus, ExpenseCategory,
 } from "./types";
-import { uid } from "./format";
+import { uid, rollingChartMonthKeys } from "./format";
 
 // ---------- SEED DATA ----------
 
@@ -70,14 +70,14 @@ const seedProjects: Project[] = [
     id: "prj_001", code: "P-2025-006", title: "Atlas Plaza — Facade Refit",
     client: "Atlas Holdings", location: "Sheikh Zayed Rd, Dubai",
     contractValue: 285000, status: "Active", progress: 42,
-    startDate: "2025-03-01T00:00:00.000Z", endDate: "2025-06-30T00:00:00.000Z",
+    startDate: "2025-03-01T00:00:00.000Z", endDate: "2027-12-31T23:59:59.999Z",
     materials: p1Materials,
   },
   {
     id: "prj_002", code: "P-2025-008", title: "Marina Residences — Curtain Wall",
     client: "Coastline Properties", location: "Dubai Marina",
     contractValue: 198000, status: "Active", progress: 22,
-    startDate: "2025-04-15T00:00:00.000Z", endDate: "2025-08-30T00:00:00.000Z",
+    startDate: "2025-04-15T00:00:00.000Z", endDate: "2028-03-31T23:59:59.999Z",
     tenderId: "tnd_002",
     materials: t2Materials.map(m => ({ ...m, id: m.id.replace("t2", "p2") })),
   },
@@ -101,6 +101,42 @@ const seedPurchases: Purchase[] = [
   { id: uid("pur"), materialId: "m_p2_4", projectId: "prj_002", supplier: "Anchor Tech", quantity: 96, rate: 34, date: "2025-04-22T00:00:00.000Z", invoiceRef: "AT-2025-09" },
   { id: uid("pur"), materialId: "m_p2_5", projectId: "prj_002", supplier: "Coat Pro", quantity: 80, rate: 22, date: "2025-04-28T00:00:00.000Z", invoiceRef: "CP-118" },
 ];
+
+/** Demo purchases/manual lines aligned to the same rolling 6 months as the dashboard chart. */
+const chartMonthKeys = rollingChartMonthKeys();
+const demoRollingPurchases: Purchase[] = chartMonthKeys.flatMap((key, idx) => [
+  {
+    id: uid("pur"),
+    materialId: "m_p1_1",
+    projectId: "prj_001",
+    supplier: "Gulf Aluminum Trading",
+    quantity: 48 + idx * 7,
+    rate: 32,
+    date: `${key}-12T10:00:00.000Z`,
+    invoiceRef: `ROLL-${key}-A`,
+  },
+  {
+    id: uid("pur"),
+    materialId: "m_p2_1",
+    projectId: "prj_002",
+    supplier: "Systems Procurement",
+    quantity: 14 + (idx % 4),
+    rate: 305,
+    date: `${key}-24T10:00:00.000Z`,
+    invoiceRef: `ROLL-${key}-B`,
+  },
+]);
+const demoRollingManual: Expense[] = chartMonthKeys.map((key, i) => ({
+  id: uid("exp"),
+  projectId: i % 2 === 0 ? "prj_001" : "prj_002",
+  category: (["Transport", "Fuel", "Site", "Equipment"] as const)[i % 4],
+  description: `Site operations — ${key}`,
+  amount: 3400 + i * 720 + (i % 3) * 380,
+  date: `${key}-18T12:00:00.000Z`,
+  source: "manual",
+}));
+
+const allSeedPurchases = [...seedPurchases, ...demoRollingPurchases];
 
 const seedWorkers: Worker[] = [
   { id: "wkr_001", name: "Rashid Khan",     role: "Lead Fabricator", dailyWage: 320, phone: "+971 50 221 4488", active: true },
@@ -192,13 +228,14 @@ export const useStore = create<Store>((set, get) => ({
 
   tenders: seedTenders,
   projects: seedProjects,
-  purchases: seedPurchases,
+  purchases: allSeedPurchases,
   workers: seedWorkers,
   assignments: seedAssignments,
   expenses: [
     ...seedManualExpenses,
+    ...demoRollingManual,
     // auto-derived expenses for purchases
-    ...seedPurchases.map<Expense>(p => ({
+    ...allSeedPurchases.map<Expense>(p => ({
       id: uid("exp"), projectId: p.projectId, category: "Materials" as ExpenseCategory,
       description: `Purchase · ${p.invoiceRef} · ${p.supplier}`,
       amount: p.quantity * p.rate, date: p.date, source: "purchase", refId: p.id,

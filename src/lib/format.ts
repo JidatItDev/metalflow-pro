@@ -22,3 +22,13 @@ export const uid = (prefix = "id") =>
 export const todayISO = () => new Date().toISOString();
 
 export const clamp = (n: number, min = 0, max = 100) => Math.max(min, Math.min(max, n));
+
+/** YYYY-MM keys for the dashboard “last 6 months” chart (oldest first). Matches local month anchors + UTC key slice used in charts. */
+export function rollingChartMonthKeys(): string[] {
+  return Array.from({ length: 6 }, (_, i) => {
+    const d = new Date();
+    d.setMonth(d.getMonth() - (5 - i));
+    d.setDate(1);
+    return d.toISOString().slice(0, 7);
+  });
+}

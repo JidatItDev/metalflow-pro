@@ -35,7 +35,7 @@ export default function Settings() {
         <div className="surface-card p-5 lg:col-span-2">
           <h2 className="text-section mb-2">Demo build</h2>
           <p className="text-label mb-4">Data lives in memory and resets on reload. Persistent storage is the only missing piece.</p>
-          <Button variant="outline" className="text-danger hover:text-danger"
+          <Button variant="outline" className="text-danger hover:bg-accent hover:text-accent-foreground"
             onClick={() => { logout(); navigate("/login"); }}>
             <LogOut className="w-4 h-4 mr-1.5" /> Sign out
           </Button>

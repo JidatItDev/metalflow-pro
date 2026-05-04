@@ -32,7 +32,10 @@ export function Topbar() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/settings")}>Settings</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { logout(); navigate("/login"); }} className="text-danger focus:text-danger">
+            <DropdownMenuItem
+              onClick={() => { logout(); navigate("/login"); }}
+              className="text-danger data-[highlighted]:text-accent-foreground focus:text-accent-foreground"
+            >
               <LogOut className="w-4 h-4 mr-2" /> Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>

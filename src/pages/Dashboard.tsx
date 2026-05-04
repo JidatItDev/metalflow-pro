@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useStore, projectFinancials } from "@/lib/store";
@@ -8,8 +9,16 @@ import { StatusBadge, statusVariantForProject } from "@/components/StatusBadge";
 import { ProgressBar, variantForProgress } from "@/components/ProgressBar";
 import { Button } from "@/components/ui/button";
 import { fmtCurrency, fmtDate, rollingChartMonthKeys } from "@/lib/format";
+import { buildProfitMonthlySeries } from "@/lib/profit";
 import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, Line, LineChart,
 } from "recharts";
 import {
   TrendingUp, Wallet, Briefcase, AlertTriangle, ArrowRight, Plus, FileText, FolderKanban, HardHat,
@@ -27,6 +36,7 @@ export default function Dashboard() {
   const tenders = useStore(s => s.tenders);
   const expenses = useStore(s => s.expenses);
   const purchases = useStore(s => s.purchases);
+  const [productFilter, setProductFilter] = useState("all");
 
   const activeProjects = projects.filter(p => p.status === "Active");
   const totalContractValue = projects.reduce((s, p) => s + p.contractValue, 0);
@@ -50,20 +60,8 @@ export default function Dashboard() {
     return f && f.totalCost > p.contractValue;
   });
 
-  const monthly = rollingChartMonthKeys().map(monthKey => {
-    const [y, m] = monthKey.split("-").map(Number);
-    const d = new Date(y, m - 1, 1);
-    const monthLabel = d.toLocaleDateString("en-US", { month: "short" });
-    let revenue = 0;
-    projects.forEach(p => {
-      const start = new Date(p.startDate); const end = new Date(p.endDate);
-      const months = Math.max(1, Math.round((end.getTime() - start.getTime()) / (30 * 86400000)));
-      const monthDate = new Date(d);
-      if (monthDate >= start && monthDate <= end) revenue += p.contractValue / months;
-    });
-    const exp = expenses.filter(e => e.date.slice(0, 7) === monthKey).reduce((s, e) => s + e.amount, 0);
-    return { month: monthLabel, Revenue: Math.round(revenue), Expenses: Math.round(exp) };
-  });
+  const monthly = buildProfitMonthlySeries(projects, expenses, rollingChartMonthKeys(), productFilter);
+  const selectedProduct = projects.find(p => p.id === productFilter);
 
   const metrics = [
     { label: "Active projects", value: activeProjects.length, hint: `${projects.length} total`, icon: <Briefcase className="w-4 h-4" /> },
@@ -110,12 +108,27 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-section">Revenue vs expenses</h2>
-              <p className="text-label mt-0.5">Last 6 months · animated bars</p>
+              <p className="text-label mt-0.5">
+                Last 6 months · {selectedProduct ? selectedProduct.title : "All Projects"} · includes profit trend
+              </p>
             </div>
+            <Select value={productFilter} onValueChange={setProductFilter}>
+              <SelectTrigger className="w-[240px] h-9">
+                <SelectValue placeholder="Filter by product" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Projects</SelectItem>
+                {projects.map((p) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="h-72 -mx-1">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={monthly} margin={{ top: 10, right: 12, left: 4, bottom: 0 }}>
+              <ComposedChart data={monthly} margin={{ top: 10, right: 12, left: 4, bottom: 0 }}>
                 <defs>
                   <linearGradient id="dashFillRev" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="hsl(var(--chart-revenue))" stopOpacity={1} />
@@ -154,7 +167,18 @@ export default function Dashboard() {
                   animationEasing="ease-out"
                   animationBegin={120}
                 />
-              </BarChart>
+                <Line
+                  type="monotone"
+                  dataKey="Profit"
+                  stroke="hsl(var(--accent))"
+                  strokeWidth={2.75}
+                  dot={{ r: 3, strokeWidth: 2, stroke: "hsl(var(--card))", fill: "hsl(var(--accent))" }}
+                  activeDot={{ r: 6, strokeWidth: 2, stroke: "hsl(var(--card))", fill: "hsl(var(--accent))" }}
+                  animationDuration={1000}
+                  animationEasing="ease-out"
+                  animationBegin={180}
+                />
+              </ComposedChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
@@ -219,6 +243,50 @@ export default function Dashboard() {
           </div>
         </motion.div>
       </div>
+
+      <motion.div
+        className="surface-card p-5 mb-6"
+        {...sectionMotion}
+        transition={{ ...sectionMotion.transition, delay: 0.26 }}
+      >
+        <div className="mb-4">
+          <h2 className="text-section">Monthly profit trend</h2>
+          <p className="text-label mt-0.5">
+            Profit only · {selectedProduct ? selectedProduct.title : "All Projects"}
+          </p>
+        </div>
+        <div className="h-64 -mx-1">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={monthly} margin={{ top: 10, right: 12, left: 4, bottom: 0 }}>
+              <CartesianGrid stroke="hsl(var(--chart-grid))" strokeDasharray="3 6" vertical={false} strokeOpacity={0.65} />
+              <XAxis dataKey="month" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+                width={36}
+              />
+              <Tooltip
+                content={({ active, payload, label }) => (
+                  <ChartTooltip active={active} payload={payload as never} label={label} />
+                )}
+              />
+              <Line
+                type="monotone"
+                dataKey="Profit"
+                name="Profit"
+                stroke="hsl(var(--accent))"
+                strokeWidth={2.8}
+                dot={{ r: 3.5, strokeWidth: 2, stroke: "hsl(var(--card))", fill: "hsl(var(--accent))" }}
+                activeDot={{ r: 7, strokeWidth: 2, stroke: "hsl(var(--card))", fill: "hsl(var(--accent))" }}
+                animationDuration={1000}
+                animationEasing="ease-out"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </motion.div>
 
       <motion.div
         className="surface-card p-5 mb-6"

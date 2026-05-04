@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStore, materialPurchaseSummary, projectFinancials } from "@/lib/store";
 import { PageHeader } from "@/components/PageHeader";
@@ -12,13 +12,14 @@ import { MetricCard } from "@/components/MetricCard";
 import { MaterialPurchaseDrawer } from "@/components/MaterialPurchaseDrawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import {
   Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
-import { ExpenseCategory, MaterialLine } from "@/lib/types";
+import { ExpenseCategory, MaterialLine, ProjectStatus } from "@/lib/types";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
@@ -59,7 +60,27 @@ export default function ProjectDetail() {
     category: "Transport", description: "", amount: 0, date: new Date().toISOString().slice(0, 10),
   });
 
+  const [draftProgress, setDraftProgress] = useState(0);
+  const [draftStatus, setDraftStatus] = useState<ProjectStatus>("Active");
+
+  useEffect(() => {
+    if (!project) return;
+    setDraftProgress(project.progress);
+    setDraftStatus(project.status);
+  }, [project?.id, project?.progress, project?.status]);
+
   if (!project) return <div className="text-label">Project not found.</div>;
+
+  const projectDirty = draftProgress !== project.progress || draftStatus !== project.status;
+  const saveProgressAndStatus = () => {
+    if (!projectDirty) return;
+    updateProject(project.id, { progress: draftProgress, status: draftStatus });
+    toast.success("Progress and status saved");
+  };
+  const discardProgressAndStatus = () => {
+    setDraftProgress(project.progress);
+    setDraftStatus(project.status);
+  };
 
   const projectPurchases = purchases.filter(p => p.projectId === project.id);
   const projectAssignments = assignments.filter(a => a.projectId === project.id);
@@ -84,15 +105,15 @@ export default function ProjectDetail() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <MetricCard label="Contract value" value={fmtCurrency(project.contractValue)} />
         <MetricCard label="Total spent" value={fmtCurrency(fin.totalCost)} hint={`${((fin.totalCost / Math.max(1, project.contractValue)) * 100).toFixed(0)}% of contract`} />
-        <MetricCard label="Profit / loss" value={fmtCurrency(fin.profit)} trend={{ value: `${fin.margin.toFixed(1)}%`, positive: fin.profit >= 0 }} />
-        <MetricCard label="Progress" value={`${project.progress}%`} hint={`Ends ${fmtDate(project.endDate)}`} />
+        <MetricCard label="Balance remaining" value={fmtCurrency(fin.profit)} trend={{ value: `${fin.margin.toFixed(1)}% of contract`, positive: fin.profit >= 0 }} />
+        <MetricCard label="Progress" value={`${draftProgress}%`} hint={projectDirty ? "Unsaved changes in overview" : `Ends ${fmtDate(project.endDate)}`} />
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="bg-secondary mb-5">
           {["overview", "materials", "labour", "expenses", "profit"].map(k =>
             <TabsTrigger key={k} value={k} className="data-[state=active]:bg-white capitalize">
-              {k === "profit" ? "Profitability" : k}
+              {k === "profit" ? "Budget" : k}
             </TabsTrigger>
           )}
         </TabsList>
@@ -126,19 +147,57 @@ export default function ProjectDetail() {
                 <Row k="Location" v={project.location} />
                 <Row k="Start" v={fmtDate(project.startDate)} />
                 <Row k="End" v={fmtDate(project.endDate)} />
-                <div className="pt-3 hairline-t space-y-1.5">
-                  <Label>Progress %</Label>
-                  <Input type="number" value={project.progress}
-                    onChange={e => updateProject(project.id, { progress: Math.max(0, Math.min(100, Number(e.target.value))) })} />
-                </div>
-                <div className="space-y-1.5">
-                  <Label>Status</Label>
-                  <Select value={project.status} onValueChange={v => updateProject(project.id, { status: v as any })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {["Active", "On Hold", "Completed"].map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                <div className="pt-3 hairline-t space-y-3">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <Label htmlFor="project-progress">Progress</Label>
+                      <span className="text-body tabular-nums font-medium">{draftProgress}%</span>
+                    </div>
+                    <Slider
+                      id="project-progress"
+                      value={[draftProgress]}
+                      min={0}
+                      max={100}
+                      step={1}
+                      onValueChange={([v]) => setDraftProgress(v)}
+                      className="py-1"
+                    />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={100}
+                      className="h-9"
+                      aria-label="Progress percent"
+                      value={draftProgress}
+                      onChange={e => {
+                        const n = Number(e.target.value);
+                        if (Number.isNaN(n)) return;
+                        setDraftProgress(Math.max(0, Math.min(100, n)));
+                      }}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label>Status</Label>
+                    <Select value={draftStatus} onValueChange={v => setDraftStatus(v as ProjectStatus)}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {(["Active", "On Hold", "Completed"] as const).map(s => (
+                          <SelectItem key={s} value={s}>{s}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {projectDirty && (
+                    <p className="text-2xs text-amber-700 dark:text-amber-500/90">You have unsaved changes.</p>
+                  )}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <Button type="button" size="sm" disabled={!projectDirty} onClick={saveProgressAndStatus}>
+                      Save progress & status
+                    </Button>
+                    <Button type="button" size="sm" variant="outline" disabled={!projectDirty} onClick={discardProgressAndStatus}>
+                      Discard
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -398,7 +457,7 @@ export default function ProjectDetail() {
         <TabsContent value="profit">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 surface-card p-5">
-              <h2 className="text-section mb-4">Profit & loss</h2>
+              <h2 className="text-section mb-4">Revenue &amp; costs</h2>
               <div className="space-y-3">
                 <PnlRow label="Contract value (revenue)" value={fmtCurrency(project.contractValue)} />
                 <PnlRow label="Materials" value={`− ${fmtCurrency(fin.materialCost)}`} muted />
@@ -409,12 +468,12 @@ export default function ProjectDetail() {
                 </div>
                 <div className="hairline-t pt-4">
                   <div className="flex items-end justify-between">
-                    <span className="type-card">Profit / loss</span>
+                    <span className="type-card">Balance remaining</span>
                     <span className={"text-metric " + (fin.profit >= 0 ? "text-success" : "text-danger")}>
                       {fin.profit >= 0 ? "+" : ""}{fmtCurrency(fin.profit)}
                     </span>
                   </div>
-                  <div className="text-2xs text-muted-foreground mt-1 text-right">Margin {fin.margin.toFixed(1)}%</div>
+                  <div className="text-2xs text-muted-foreground mt-1 text-right">{fin.margin.toFixed(1)}% of contract value</div>
                 </div>
               </div>
             </div>

@@ -31,7 +31,7 @@ const NEW_TEMPLATE = (): Tender => ({
   materials: [],
   labourEstimate: 0,
   otherCosts: 0,
-  marginPct: 18,
+  marginPct: 0,
   notes: "",
 });
 
@@ -212,11 +212,16 @@ export default function TenderDetail() {
                 <p className="text-label mt-0.5">Quantities and unit rates</p>
               </div>
               <Button size="sm" variant="outline" onClick={addMaterial}>
-                <Plus className="w-3.5 h-3.5 mr-1" /> Add row
+                <Plus className="w-3.5 h-3.5 mr-1" /> Add material
               </Button>
             </div>
             {draft.materials.length === 0 ? (
-              <div className="py-12 text-center text-label">No materials yet. Add your first row.</div>
+              <div className="py-12 px-4 text-center space-y-4">
+                <p className="text-label">No materials yet. Start the estimate with your first line.</p>
+                <Button size="sm" variant="default" onClick={addMaterial}>
+                  <Plus className="w-3.5 h-3.5 mr-1.5" /> Add material
+                </Button>
+              </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-body">
@@ -232,7 +237,7 @@ export default function TenderDetail() {
                   </thead>
                   <tbody>
                     {draft.materials.map(m => (
-                      <tr key={m.id} className="hairline-b last:border-0">
+                      <tr key={m.id} className="hairline-b">
                         <td className="px-4 py-2">
                           <Input className="h-9" value={m.name} onChange={e => updateMaterial(m.id, { name: e.target.value })} placeholder="Material name" />
                         </td>
@@ -253,6 +258,14 @@ export default function TenderDetail() {
                         </td>
                       </tr>
                     ))}
+                    <tr>
+                      <td colSpan={6} className="px-4 pb-3 pt-1">
+                        <Button type="button" variant="outline" size="sm" className="h-8 gap-1 px-2.5 text-xs" onClick={addMaterial}>
+                          <Plus className="w-3 h-3" />
+                          Add material
+                        </Button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

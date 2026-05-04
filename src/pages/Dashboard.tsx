@@ -83,9 +83,9 @@ export default function Dashboard() {
         <MetricCard label="Contract value" value={fmtCurrency(totalContractValue)} hint="All projects" icon={<Wallet className="w-4 h-4" />} />
         <MetricCard label="Total spent" value={fmtCurrency(totalSpent)} hint="Materials · Labour · Other" icon={<TrendingUp className="w-4 h-4" />} />
         <MetricCard
-          label="Net profit"
+          label="Balance remaining"
           value={fmtCurrency(totalProfit)}
-          hint={totalProfit >= 0 ? "Across portfolio" : "Loss exposure"}
+          hint={totalProfit >= 0 ? "Contract value minus costs" : "Over committed vs contracts"}
           trend={{ value: `${((totalProfit / Math.max(1, totalContractValue)) * 100).toFixed(1)}%`, positive: totalProfit >= 0 }}
           icon={<TrendingUp className="w-4 h-4" />}
         />

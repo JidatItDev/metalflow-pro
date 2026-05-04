@@ -1,4 +1,4 @@
-import { Bell, Plus, LogOut } from "lucide-react";
+import { Plus, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/lib/store";
 import {
@@ -11,18 +11,6 @@ export function Topbar() {
   const navigate = useNavigate();
   const user = useStore(s => s.user);
   const logout = useStore(s => s.logout);
-  const tenders = useStore(s => s.tenders);
-  const projects = useStore(s => s.projects);
-
-  // notifications: over-purchases & projects without movement (heuristics)
-  const purchases = useStore(s => s.purchases);
-  const overCount = projects.reduce((acc, p) => {
-    return acc + p.materials.filter(m => {
-      const bought = purchases.filter(pp => pp.materialId === m.id).reduce((s, x) => s + x.quantity, 0);
-      return bought > m.quantity;
-    }).length;
-  }, 0);
-  const submittedCount = tenders.filter(t => t.status === "Submitted").length;
 
   return (
     <header className="h-16 sticky top-0 z-30 bg-background/85 backdrop-blur hairline-b">
@@ -30,36 +18,6 @@ export function Topbar() {
         <Button size="sm" variant="outline" onClick={() => navigate("/tenders/new")}>
           <Plus className="w-4 h-4 mr-1.5" /> New Tender
         </Button>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="relative w-9 h-9 rounded-md bg-white hairline flex items-center justify-center hover:bg-secondary">
-              <Bell className="w-4 h-4 text-slate-500" />
-              {(overCount + submittedCount) > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-danger ring-2 ring-background" />
-              )}
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-72">
-            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {overCount === 0 && submittedCount === 0 && (
-              <div className="px-3 py-6 text-center text-label">All clear. Nothing new.</div>
-            )}
-            {overCount > 0 && (
-              <DropdownMenuItem onClick={() => navigate("/projects")} className="flex flex-col items-start gap-0.5 cursor-pointer">
-                <span className="text-body font-medium">{overCount} material{overCount > 1 ? "s" : ""} over-purchased</span>
-                <span className="text-2xs text-muted-foreground">Open projects and reconcile purchases.</span>
-              </DropdownMenuItem>
-            )}
-            {submittedCount > 0 && (
-              <DropdownMenuItem onClick={() => navigate("/tenders")} className="flex flex-col items-start gap-0.5 cursor-pointer">
-                <span className="text-body font-medium">{submittedCount} tender{submittedCount > 1 ? "s" : ""} awaiting response</span>
-                <span className="text-2xs text-muted-foreground">Follow up with clients.</span>
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

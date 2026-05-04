@@ -52,7 +52,7 @@ export default function Reports() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card p-5">
-          <h2 className="text-section mb-4">Project profitability</h2>
+          <h2 className="text-section mb-4">Project balance remaining</h2>
           <div className="space-y-3">
             {profitability.map(p => {
               const margin = p.Revenue > 0 ? (p.Profit / p.Revenue) * 100 : 0;
@@ -68,7 +68,7 @@ export default function Reports() {
                     variant={p.Profit >= 0 ? "success" : "danger"} />
                   <div className="flex items-center justify-between text-2xs text-muted-foreground mt-1">
                     <span>{fmtCurrency(p.Cost)} of {fmtCurrency(p.Revenue)}</span>
-                    <span>{margin.toFixed(1)}% margin</span>
+                    <span>{margin.toFixed(1)}% of contract</span>
                   </div>
                 </div>
               );

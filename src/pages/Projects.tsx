@@ -62,7 +62,7 @@ export default function Projects() {
                     <div className="type-card font-medium tabular-nums">{fmtCurrency(p.contractValue)}</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xs text-muted-foreground">Profit</div>
+                    <div className="text-2xs text-muted-foreground">Balance remaining</div>
                     <div className={"type-card font-medium tabular-nums " + (profitPositive ? "text-success" : "text-danger")}>
                       {profitPositive ? "+" : ""}{fmtCurrency(f.profit)}
                     </div>

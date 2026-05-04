@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# MetaFlow
 
-TODO: Document your project here
+Web workspace for tenders, projects, procurement, labour, expenses and reports.

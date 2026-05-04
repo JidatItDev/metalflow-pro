@@ -216,9 +216,9 @@ interface Store {
 
 export const useStore = create<Store>((set, get) => ({
   authed: false,
-  user: { name: "Omar Al-Farsi", email: "owner@alco.ae", company: "ALCO Aluminum Works" },
+  user: { name: "Omar Al-Farsi", email: "owner@metaflow.app", company: "MetaFlow" },
   login: (email, password) => {
-    if (email.trim().toLowerCase() === "owner@alco.ae" && password === "demo1234") {
+    if (email.trim().toLowerCase() === "owner@metaflow.app" && password === "demo1234") {
       set({ authed: true });
       return true;
     }

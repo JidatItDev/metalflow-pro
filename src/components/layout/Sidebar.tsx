@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard, FileText, FolderKanban,
-  Hammer, Receipt, BarChart3, Settings, Layers,
+  Hammer, Receipt, BarChart3, Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useStore } from "@/lib/store";
@@ -20,46 +20,60 @@ export const navItems = [
 export function Sidebar() {
   const user = useStore(s => s.user);
   return (
-    <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-sidebar text-sidebar-foreground h-screen sticky top-0">
-      <div className="px-5 h-16 flex items-center gap-2.5 border-b border-sidebar-border">
-        <div className="w-8 h-8 rounded-md bg-accent-soft flex items-center justify-center">
-          <Layers className="w-4 h-4 text-accent" />
+    <aside
+      className={cn(
+        "hidden lg:flex flex-col w-[248px] shrink-0 bg-sidebar text-sidebar-foreground h-screen sticky top-0 hairline-r",
+      )}
+    >
+      <div className="px-4 h-16 flex items-center gap-3 hairline-b bg-sidebar-primary/60 backdrop-blur-[2px]">
+        <div className="w-9 h-9 rounded-lg bg-sidebar-primary shadow-sm ring-1 ring-sidebar-border/70 flex items-center justify-center">
+          <img src="/logo.png" alt="" className="w-7 h-7 rounded-md object-contain" width={28} height={28} />
         </div>
-        <div className="leading-tight">
-          <div className="type-card text-sidebar-foreground">ALCO</div>
-          <div className="text-2xs text-muted-foreground">Aluminum Works</div>
+        <div className="leading-tight min-w-0">
+          <div className="type-card text-sidebar-foreground tracking-tight">MetaFlow</div>
+          <div className="text-2xs text-muted-foreground">Operating suite</div>
         </div>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-2.5 py-3 space-y-1 overflow-y-auto">
+        <p className="px-3 pb-1.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80">
+          Navigate
+        </p>
         {navItems.map(item => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
             className={({ isActive }) => cn(
-              "group flex items-center gap-2.5 px-3 h-9 rounded-md text-body transition-colors",
+              "group relative flex items-center gap-2.5 pl-3 pr-2.5 h-9 rounded-lg text-body transition-colors",
               isActive
-                ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm"
-                : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm ring-1 ring-sidebar-border/90"
+                : "text-sidebar-foreground hover:bg-sidebar-accent/90 hover:text-sidebar-accent-foreground",
             )}
           >
             {({ isActive }) => (
               <>
-                <span className={cn(
-                  "w-1 h-1 rounded-full",
-                  isActive ? "bg-accent" : "bg-steel-300/40 group-hover:bg-steel-300",
-                )} />
-                <item.icon className="w-4 h-4" />
-                <span>{item.label}</span>
+                {isActive && (
+                  <span
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-accent"
+                    aria-hidden
+                  />
+                )}
+                <item.icon
+                  className={cn(
+                    "w-4 h-4 shrink-0",
+                    isActive ? "text-accent" : "text-muted-foreground/80 group-hover:text-sidebar-foreground",
+                  )}
+                />
+                <span className="truncate">{item.label}</span>
               </>
             )}
           </NavLink>
         ))}
       </nav>
 
-      <div className="p-3 border-t border-sidebar-border">
-        <div className="flex items-center gap-2.5 px-2 py-2 rounded-md hover:bg-sidebar-accent transition-colors cursor-pointer">
+      <div className="p-2.5 hairline-t">
+        <div className="flex items-center gap-2.5 px-2.5 py-2.5 rounded-xl bg-sidebar-accent/35 ring-1 ring-sidebar-border/50 hover:bg-sidebar-accent/55 transition-colors cursor-pointer">
           <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xs font-medium">
             {user.name.split(" ").map(n => n[0]).slice(0, 2).join("")}
           </div>

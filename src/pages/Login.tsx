@@ -5,13 +5,13 @@ import { useStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Layers, ArrowRight, ShieldCheck, BarChart3, Wrench } from "lucide-react";
+import { ArrowRight, ShieldCheck, BarChart3, Wrench } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Login() {
   const navigate = useNavigate();
   const login = useStore(s => s.login);
-  const [email, setEmail] = useState("owner@alco.ae");
+  const [email, setEmail] = useState("owner@metaflow.app");
   const [password, setPassword] = useState("demo1234");
   const [loading, setLoading] = useState(false);
 
@@ -35,12 +35,10 @@ export default function Login() {
       {/* Left: form */}
       <div className="flex flex-col justify-between p-8 lg:p-14">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
-            <Layers className="w-4 h-4 text-primary-foreground" />
-          </div>
+          <img src="/logo.png" alt="" className="w-9 h-9 rounded-md object-contain" width={36} height={36} />
           <div className="leading-tight">
-            <div className="type-card text-foreground">ALCO</div>
-            <div className="text-2xs text-muted-foreground">Aluminum Works · Operating Suite</div>
+            <div className="type-card text-foreground">MetaFlow</div>
+            <div className="text-2xs text-muted-foreground">Operating suite</div>
           </div>
         </div>
 
@@ -68,11 +66,11 @@ export default function Login() {
 
           <div className="mt-6 surface-card p-4">
             <div className="text-2xs text-muted-foreground mb-1.5">Demo credentials</div>
-            <div className="font-mono text-2xs text-foreground">owner@alco.ae · demo1234</div>
+            <div className="font-mono text-2xs text-foreground">owner@metaflow.app · demo1234</div>
           </div>
         </motion.div>
 
-        <div className="text-2xs text-muted-foreground">© 2025 ALCO Aluminum Works · Demo build</div>
+        <div className="text-2xs text-muted-foreground">© 2026 MetaFlow · Demo build</div>
       </div>
 
       {/* Right: marketing panel (light) */}

@@ -1,4 +1,4 @@
-// Domain types for ALCO
+// Domain types for MetaFlow
 
 export type TenderStatus = "Draft" | "Submitted" | "Won" | "Lost";
 export type ProjectStatus = "Active" | "On Hold" | "Completed";

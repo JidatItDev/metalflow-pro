@@ -1,4 +1,4 @@
-// Domain types for MetaFlow
+// Domain types for Everest
 
 export type TenderStatus = "Draft" | "Submitted" | "Won" | "Lost";
 export type ProjectStatus = "Active" | "On Hold" | "Completed";

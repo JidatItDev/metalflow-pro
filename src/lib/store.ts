@@ -27,7 +27,7 @@ const seedTenders: Tender[] = [
   {
     id: "tnd_001", code: "T-2025-014", title: "Office Tower — Glazing Package",
     client: "Meridian Developments", clientContact: "Khalid Rahman · +971 50 442 8819",
-    location: "Business Bay, Dubai",
+    location: "Business Bay, Qatar",
     createdAt: "2025-04-08T09:00:00.000Z", dueDate: "2025-05-22T00:00:00.000Z",
     status: "Submitted", materials: t1Materials,
     labourEstimate: 38000, otherCosts: 12500, marginPct: 18,
@@ -36,7 +36,7 @@ const seedTenders: Tender[] = [
   {
     id: "tnd_002", code: "T-2025-011", title: "Marina Residences — Curtain Wall",
     client: "Coastline Properties", clientContact: "Sara Mansoor · +971 55 109 7741",
-    location: "Dubai Marina",
+    location: "Qatar Marina",
     createdAt: "2025-03-12T09:00:00.000Z", dueDate: "2025-04-02T00:00:00.000Z",
     status: "Won", materials: t2Materials,
     labourEstimate: 82000, otherCosts: 28000, marginPct: 22,
@@ -45,7 +45,7 @@ const seedTenders: Tender[] = [
   },
   {
     id: "tnd_003", code: "T-2025-009", title: "Warehouse Skylight Replacement",
-    client: "Logistic Park JLT", location: "JLT, Dubai",
+    client: "Logistic Park JLT", location: "JLT, Qatar",
     createdAt: "2025-02-20T09:00:00.000Z", dueDate: "2025-03-10T00:00:00.000Z",
     status: "Lost", materials: [
       { id: "m_t3_1", name: "Polycarbonate Sheet", unit: "sqm", quantity: 180, rate: 75 },
@@ -68,14 +68,14 @@ const p1Materials: MaterialLine[] = [
 const seedProjects: Project[] = [
   {
     id: "prj_001", code: "P-2025-006", title: "Atlas Plaza — Facade Refit",
-    client: "Atlas Holdings", location: "Sheikh Zayed Rd, Dubai",
+    client: "Atlas Holdings", location: "Sheikh Zayed Rd, Qatar",
     contractValue: 285000, status: "Active", progress: 42,
     startDate: "2025-03-01T00:00:00.000Z", endDate: "2027-12-31T23:59:59.999Z",
     materials: p1Materials,
   },
   {
     id: "prj_002", code: "P-2025-008", title: "Marina Residences — Curtain Wall",
-    client: "Coastline Properties", location: "Dubai Marina",
+    client: "Coastline Properties", location: "Qatar Marina",
     contractValue: 198000, status: "Active", progress: 22,
     startDate: "2025-04-15T00:00:00.000Z", endDate: "2028-03-31T23:59:59.999Z",
     tenderId: "tnd_002",
@@ -216,9 +216,9 @@ interface Store {
 
 export const useStore = create<Store>((set, get) => ({
   authed: false,
-  user: { name: "Omar Al-Farsi", email: "owner@metaflow.app", company: "MetaFlow" },
+  user: { name: "Habib Mukattash", email: "owner@everest.app", company: "Everest" },
   login: (email, password) => {
-    if (email.trim().toLowerCase() === "owner@metaflow.app" && password === "demo1234") {
+    if (email.trim().toLowerCase() === "owner@everest.app" && password === "demo1234") {
       set({ authed: true });
       return true;
     }

@@ -28,7 +28,7 @@ export default function Settings() {
           <div className="space-y-3 text-body">
             <Row k="Currency" v="QAR — Qatari Riyal" />
             <Row k="Date format" v="DD MMM YYYY" />
-            <Row k="Timezone" v="Asia/Dubai (GMT+4)" />
+            <Row k="Timezone" v="Asia/Qatar (GMT+3)" />
             <Row k="Plan" v="Owner · Single seat" />
           </div>
         </div>

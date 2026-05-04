@@ -30,7 +30,7 @@ export function Sidebar() {
           <img src="/logo.png" alt="" className="w-7 h-7 rounded-md object-contain" width={28} height={28} />
         </div>
         <div className="leading-tight min-w-0">
-          <div className="type-card text-sidebar-foreground tracking-tight">MetaFlow</div>
+          <div className="type-card text-sidebar-foreground tracking-tight">Everest</div>
           <div className="text-2xs text-muted-foreground">Operating suite</div>
         </div>
       </div>

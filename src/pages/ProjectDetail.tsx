@@ -405,7 +405,7 @@ export default function ProjectDetail() {
                 </div>
                 <div className="hairline-t pt-4">
                   <div className="flex items-end justify-between">
-                    <span className="text-card">Profit / loss</span>
+                    <span className="type-card">Profit / loss</span>
                     <span className={"text-metric " + (fin.profit >= 0 ? "text-success" : "text-danger")}>
                       {fin.profit >= 0 ? "+" : ""}{fmtCurrency(fin.profit)}
                     </span>
@@ -473,9 +473,9 @@ function CostBar({ project: f, stacked }: { project: ReturnType<typeof projectFi
       </div>
       {!stacked && (
         <div className="grid grid-cols-3 gap-3 mt-4">
-          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Materials</div><div className="text-card font-medium tabular-nums mt-1">{fmtCurrency(f.materialCost)}</div></div>
-          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Labour</div><div className="text-card font-medium tabular-nums mt-1">{fmtCurrency(f.labourCost)}</div></div>
-          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Other</div><div className="text-card font-medium tabular-nums mt-1">{fmtCurrency(f.otherCost)}</div></div>
+          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Materials</div><div className="type-card font-medium tabular-nums mt-1">{fmtCurrency(f.materialCost)}</div></div>
+          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Labour</div><div className="type-card font-medium tabular-nums mt-1">{fmtCurrency(f.labourCost)}</div></div>
+          <div className="surface-metric p-3"><div className="text-2xs text-muted-foreground">Other</div><div className="type-card font-medium tabular-nums mt-1">{fmtCurrency(f.otherCost)}</div></div>
         </div>
       )}
     </>

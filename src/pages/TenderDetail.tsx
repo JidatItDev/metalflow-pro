@@ -138,7 +138,7 @@ export default function TenderDetail() {
                   </DialogHeader>
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <Label>Contract value (AED)</Label>
+                      <Label>Contract value (QAR)</Label>
                       <Input type="number" value={contractValue} onChange={e => setContractValue(Number(e.target.value))} />
                       <div className="text-2xs text-muted-foreground">Quoted: {fmtCurrency(totals.quote)}</div>
                     </div>

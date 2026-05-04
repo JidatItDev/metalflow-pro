@@ -39,7 +39,7 @@ export function MobileNav() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[280px] p-0">
             <div className="px-5 h-16 flex items-center hairline-b">
-              <div className="text-card">Menu</div>
+              <div className="type-card">Menu</div>
             </div>
             <div className="p-2">
               {navItems.map(item => {

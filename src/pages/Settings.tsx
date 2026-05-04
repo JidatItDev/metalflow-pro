@@ -26,7 +26,7 @@ export default function Settings() {
         <div className="surface-card p-5">
           <h2 className="text-section mb-4">Preferences</h2>
           <div className="space-y-3 text-body">
-            <Row k="Currency" v="AED — UAE Dirham" />
+            <Row k="Currency" v="QAR — Qatari Riyal" />
             <Row k="Date format" v="DD MMM YYYY" />
             <Row k="Timezone" v="Asia/Dubai (GMT+4)" />
             <Row k="Plan" v="Owner · Single seat" />

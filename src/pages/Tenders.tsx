@@ -80,7 +80,7 @@ export default function Tenders() {
                   onClick={() => navigate(`/tenders/${t.id}`)}
                 >
                   <td className="px-4 py-3.5">
-                    <div className="text-card font-medium">{t.title}</div>
+                    <div className="type-card font-medium">{t.title}</div>
                     <div className="text-2xs text-muted-foreground">{t.code}</div>
                   </td>
                   <td className="px-4 py-3.5">
@@ -112,7 +112,7 @@ export default function Tenders() {
             <button key={t.id} onClick={() => navigate(`/tenders/${t.id}`)} className="w-full text-left p-4 hover:bg-secondary/60">
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="min-w-0">
-                  <div className="text-card font-medium truncate">{t.title}</div>
+                  <div className="type-card font-medium truncate">{t.title}</div>
                   <div className="text-2xs text-muted-foreground">{t.code} · {t.client}</div>
                 </div>
                 <StatusBadge variant={statusVariantForTender(t.status)}>{t.status}</StatusBadge>

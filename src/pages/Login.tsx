@@ -39,7 +39,7 @@ export default function Login() {
             <Layers className="w-4 h-4 text-white" />
           </div>
           <div className="leading-tight">
-            <div className="text-card text-foreground">ALCO</div>
+            <div className="type-card text-foreground">ALCO</div>
             <div className="text-2xs text-muted-foreground">Aluminum Works · Operating Suite</div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function Login() {
                 <f.icon className="w-4 h-4 text-white" />
               </div>
               <div>
-                <div className="text-card text-white">{f.title}</div>
+                <div className="type-card text-white">{f.title}</div>
                 <div className="text-2xs text-steel-300 mt-0.5">{f.body}</div>
               </div>
             </motion.div>

@@ -48,7 +48,7 @@ export default function Projects() {
             >
               <div className="flex items-start justify-between gap-3 mb-1">
                 <div className="min-w-0">
-                  <div className="text-card font-medium truncate">{p.title}</div>
+                  <div className="type-card font-medium truncate">{p.title}</div>
                   <div className="text-2xs text-muted-foreground">{p.code}</div>
                 </div>
                 <StatusBadge variant={statusVariantForProject(p.status)}>{p.status}</StatusBadge>
@@ -59,11 +59,11 @@ export default function Projects() {
                 <div className="flex items-end justify-between">
                   <div>
                     <div className="text-2xs text-muted-foreground">Contract value</div>
-                    <div className="text-card font-medium tabular-nums">{fmtCurrency(p.contractValue)}</div>
+                    <div className="type-card font-medium tabular-nums">{fmtCurrency(p.contractValue)}</div>
                   </div>
                   <div className="text-right">
                     <div className="text-2xs text-muted-foreground">Profit</div>
-                    <div className={"text-card font-medium tabular-nums " + (profitPositive ? "text-success" : "text-danger")}>
+                    <div className={"type-card font-medium tabular-nums " + (profitPositive ? "text-success" : "text-danger")}>
                       {profitPositive ? "+" : ""}{fmtCurrency(f.profit)}
                     </div>
                   </div>

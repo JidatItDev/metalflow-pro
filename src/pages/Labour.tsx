@@ -34,10 +34,10 @@ export default function Labour() {
               <button onClick={() => navigate(`/projects/${project.id}`)}
                 className="w-full p-5 hairline-b flex items-center justify-between hover:bg-secondary/60">
                 <div className="text-left min-w-0">
-                  <div className="text-card font-medium truncate">{project.title}</div>
+                  <div className="type-card font-medium truncate">{project.title}</div>
                   <div className="text-2xs text-muted-foreground">{project.code} · {items.length} worker{items.length === 1 ? "" : "s"}</div>
                 </div>
-                <div className="text-card font-medium tabular-nums">{fmtCurrency(total)}</div>
+                <div className="type-card font-medium tabular-nums">{fmtCurrency(total)}</div>
               </button>
               <div className="divide-y divide-border">
                 {items.map(({ a, w }) => (

@@ -71,11 +71,11 @@ export function MaterialPurchaseDrawer({
 
           {/* New purchase */}
           <div>
-            <h3 className="text-card mb-3">Record new purchase</h3>
+            <h3 className="type-card mb-3">Record new purchase</h3>
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 space-y-1.5"><Label>Supplier</Label><Input value={supplier} onChange={e => setSupplier(e.target.value)} placeholder="Supplier name" /></div>
               <div className="space-y-1.5"><Label>Quantity ({material.unit})</Label><Input type="number" value={quantity || ""} onChange={e => setQuantity(Number(e.target.value))} /></div>
-              <div className="space-y-1.5"><Label>Rate (AED)</Label><Input type="number" value={rate || ""} onChange={e => setRate(Number(e.target.value))} /></div>
+              <div className="space-y-1.5"><Label>Rate (QAR)</Label><Input type="number" value={rate || ""} onChange={e => setRate(Number(e.target.value))} /></div>
               <div className="space-y-1.5"><Label>Date</Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} /></div>
               <div className="space-y-1.5"><Label>Invoice #</Label><Input value={invoiceRef} onChange={e => setInvoiceRef(e.target.value)} placeholder="e.g. INV-1023" /></div>
               <div className="col-span-2 flex items-center justify-between pt-2">
@@ -87,7 +87,7 @@ export function MaterialPurchaseDrawer({
 
           {/* History */}
           <div>
-            <h3 className="text-card mb-3">Purchase history ({summary.purchases.length})</h3>
+            <h3 className="type-card mb-3">Purchase history ({summary.purchases.length})</h3>
             {summary.purchases.length === 0 ? (
               <div className="text-label py-8 text-center surface-metric">No purchases yet.</div>
             ) : (

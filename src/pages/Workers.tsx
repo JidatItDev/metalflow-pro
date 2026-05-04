@@ -54,11 +54,11 @@ export default function Workers() {
           return (
             <div key={w.id} className="surface-card p-5">
               <div className="flex items-start gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-accent-soft text-accent flex items-center justify-center text-card font-medium">
+                <div className="w-10 h-10 rounded-full bg-accent-soft text-accent flex items-center justify-center type-card font-medium">
                   {w.name.split(" ").map(n => n[0]).slice(0, 2).join("")}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-card font-medium truncate">{w.name}</div>
+                  <div className="type-card font-medium truncate">{w.name}</div>
                   <div className="text-2xs text-muted-foreground">{w.role}</div>
                 </div>
                 <Switch checked={w.active} onCheckedChange={v => updateWorker(w.id, { active: v })} />

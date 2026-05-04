@@ -27,7 +27,7 @@ export function Sidebar() {
           <Layers className="w-4 h-4 text-white" />
         </div>
         <div className="leading-tight">
-          <div className="text-card text-white">ALCO</div>
+          <div className="type-card text-white">ALCO</div>
           <div className="text-2xs text-steel-300">Aluminum Works</div>
         </div>
       </div>

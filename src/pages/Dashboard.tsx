@@ -181,7 +181,7 @@ export default function Dashboard() {
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0">
-                    <div className="text-card truncate">{p.title}</div>
+                    <div className="type-card truncate">{p.title}</div>
                     <div className="text-2xs text-muted-foreground truncate">{p.client} · {p.code}</div>
                   </div>
                   <StatusBadge variant={statusVariantForProject(p.status)}>{p.status}</StatusBadge>

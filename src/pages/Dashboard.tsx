@@ -210,7 +210,7 @@ export default function Dashboard() {
           <button key={qa.label} onClick={() => navigate(qa.to)}
             className="surface-card p-4 hover:bg-accent-soft transition-colors flex items-center gap-3 group"
           >
-            <div className="w-9 h-9 rounded-md bg-secondary group-hover:bg-white flex items-center justify-center text-slate-700">
+            <div className="w-9 h-9 rounded-md bg-secondary group-hover:bg-card flex items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors">
               <qa.icon className="w-4 h-4" />
             </div>
             <div className="text-body font-medium">{qa.label}</div>

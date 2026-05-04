@@ -35,8 +35,8 @@ export default function Login() {
       {/* Left: form */}
       <div className="flex flex-col justify-between p-8 lg:p-14">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-md bg-slate-900 flex items-center justify-center">
-            <Layers className="w-4 h-4 text-white" />
+          <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
+            <Layers className="w-4 h-4 text-primary-foreground" />
           </div>
           <div className="leading-tight">
             <div className="type-card text-foreground">ALCO</div>
@@ -75,16 +75,16 @@ export default function Login() {
         <div className="text-2xs text-muted-foreground">© 2025 ALCO Aluminum Works · Demo build</div>
       </div>
 
-      {/* Right: marketing panel */}
-      <div className="hidden lg:flex relative bg-slate-900 text-white p-14 flex-col justify-between overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.06]" style={{
+      {/* Right: marketing panel (light) */}
+      <div className="hidden lg:flex relative bg-gradient-to-br from-accent-soft via-card to-secondary text-foreground p-14 flex-col justify-between overflow-hidden border-l border-border">
+        <div className="absolute inset-0 opacity-[0.35]" style={{
           backgroundImage:
-            "linear-gradient(hsl(var(--steel-100)) 0.5px, transparent 0.5px), linear-gradient(90deg, hsl(var(--steel-100)) 0.5px, transparent 0.5px)",
-          backgroundSize: "32px 32px",
+            "linear-gradient(hsl(var(--border)) 0.5px, transparent 0.5px), linear-gradient(90deg, hsl(var(--border)) 0.5px, transparent 0.5px)",
+          backgroundSize: "28px 28px",
         }} />
         <div className="relative">
-          <div className="text-2xs uppercase tracking-wider text-steel-300">Operating suite for fabricators</div>
-          <div className="text-page mt-3 max-w-sm leading-tight">
+          <div className="text-2xs uppercase tracking-wider text-muted-foreground">Operating suite for fabricators</div>
+          <div className="text-page mt-3 max-w-sm leading-tight text-foreground">
             From quotation to profit — every project, fully accountable.
           </div>
         </div>
@@ -97,15 +97,14 @@ export default function Login() {
           ].map((f, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.08 }}
-              className="flex items-start gap-3 p-4 rounded-[10px]"
-              style={{ background: "hsla(0,0%,100%,0.04)", border: "0.5px solid hsla(0,0%,100%,0.08)" }}
+              className="flex items-start gap-3 p-4 rounded-[10px] bg-card/90 border border-border shadow-sm"
             >
-              <div className="w-8 h-8 rounded-md bg-white/10 flex items-center justify-center shrink-0">
-                <f.icon className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-md bg-accent-soft flex items-center justify-center shrink-0">
+                <f.icon className="w-4 h-4 text-accent" />
               </div>
               <div>
-                <div className="type-card text-white">{f.title}</div>
-                <div className="text-2xs text-steel-300 mt-0.5">{f.body}</div>
+                <div className="type-card text-foreground">{f.title}</div>
+                <div className="text-2xs text-muted-foreground mt-0.5">{f.body}</div>
               </div>
             </motion.div>
           ))}

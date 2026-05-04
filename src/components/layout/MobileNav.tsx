@@ -17,7 +17,7 @@ export function MobileNav() {
   const { pathname } = useLocation();
 
   return (
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur hairline-t">
+    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-card/95 backdrop-blur-md border-t border-border">
       <div className="flex items-stretch justify-around h-16 px-1 pb-[env(safe-area-inset-bottom)]">
         {primary.map(item => (
           <NavLink key={item.to} to={item.to} end={item.end}

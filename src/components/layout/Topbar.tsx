@@ -21,7 +21,7 @@ export function Topbar() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="w-9 h-9 rounded-full bg-slate-900 text-white text-2xs font-medium flex items-center justify-center hover:opacity-90">
+            <button className="w-9 h-9 rounded-full bg-primary text-primary-foreground text-2xs font-medium flex items-center justify-center hover:opacity-90">
               {user.name.split(" ").map(n => n[0]).slice(0, 2).join("")}
             </button>
           </DropdownMenuTrigger>

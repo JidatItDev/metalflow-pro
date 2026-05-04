@@ -22,12 +22,12 @@ export function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-sidebar text-sidebar-foreground h-screen sticky top-0">
       <div className="px-5 h-16 flex items-center gap-2.5 border-b border-sidebar-border">
-        <div className="w-8 h-8 rounded-md bg-white/10 flex items-center justify-center">
-          <Layers className="w-4 h-4 text-white" />
+        <div className="w-8 h-8 rounded-md bg-accent-soft flex items-center justify-center">
+          <Layers className="w-4 h-4 text-accent" />
         </div>
         <div className="leading-tight">
-          <div className="type-card text-white">ALCO</div>
-          <div className="text-2xs text-steel-300">Aluminum Works</div>
+          <div className="type-card text-sidebar-foreground">ALCO</div>
+          <div className="text-2xs text-muted-foreground">Aluminum Works</div>
         </div>
       </div>
 
@@ -40,8 +40,8 @@ export function Sidebar() {
             className={({ isActive }) => cn(
               "group flex items-center gap-2.5 px-3 h-9 rounded-md text-body transition-colors",
               isActive
-                ? "bg-white text-slate-900 font-medium shadow-sm"
-                : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-white",
+                ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm"
+                : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             )}
           >
             {({ isActive }) => (
@@ -60,12 +60,12 @@ export function Sidebar() {
 
       <div className="p-3 border-t border-sidebar-border">
         <div className="flex items-center gap-2.5 px-2 py-2 rounded-md hover:bg-sidebar-accent transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center text-2xs font-medium">
+          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xs font-medium">
             {user.name.split(" ").map(n => n[0]).slice(0, 2).join("")}
           </div>
           <div className="flex-1 min-w-0 leading-tight">
-            <div className="text-body text-white truncate">{user.name}</div>
-            <div className="text-2xs text-steel-300 truncate">{user.email}</div>
+            <div className="text-body text-sidebar-foreground truncate">{user.name}</div>
+            <div className="text-2xs text-muted-foreground truncate">{user.email}</div>
           </div>
         </div>
       </div>

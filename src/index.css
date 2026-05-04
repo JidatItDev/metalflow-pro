@@ -3,77 +3,85 @@
 @tailwind utilities;
 
 /* ALCO — Aluminum Subcontractor SaaS
-   Design system: industrial-precise, calm, trustworthy.
+   Design system: “Paper & ink” (warm, high-contrast light).
+   Deeper canvas + tinted cards + clear borders/shadows; secondary text reads as ink, not faint grey.
    All colors HSL.
 */
 
 @layer base {
   :root {
-    /* Surfaces */
-    --background: 213 22% 93%;        /* Fog #E8EDF2 */
-    --surface: 0 0% 100%;              /* card white */
-    --foreground: 211 35% 17%;         /* Slate 900 #1C2B3A */
+    /* Canvas darker than cards so panels read as elevated */
+    --background: 35 12% 89%;
+    --surface: 40 33% 98%;
+    --foreground: 28 32% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 211 35% 17%;
+    /* Slightly warm near-white — visibly not the page */
+    --card: 40 40% 99%;
+    --card-foreground: 28 32% 11%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 211 35% 17%;
+    --popover: 40 40% 99%;
+    --popover-foreground: 28 32% 11%;
 
-    /* Slate scale */
-    --slate-900: 211 35% 17%;
-    --slate-700: 212 31% 26%;
-    --slate-500: 211 28% 40%;
-    --steel-300: 210 17% 64%;
-    --steel-100: 210 22% 83%;
-    --fog: 213 22% 93%;
+    /* Warm ink scale (replaces cool slate for Tailwind slate-* tokens) */
+    --slate-900: 28 32% 11%;
+    --slate-700: 28 18% 26%;
+    --slate-500: 28 12% 36%;
+    --steel-300: 28 8% 52%;
+    --steel-100: 32 14% 76%;
+    --fog: 35 12% 89%;
 
-    /* Primary = slate 900 */
-    --primary: 211 35% 17%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 28 32% 11%;
+    --primary-foreground: 40 40% 99%;
 
-    --secondary: 213 22% 96%;
-    --secondary-foreground: 211 35% 17%;
+    --secondary: 35 14% 86%;
+    --secondary-foreground: 28 32% 11%;
 
-    --muted: 213 22% 95%;
-    --muted-foreground: 211 28% 40%;
+    --muted: 35 12% 87%;
+    /* Dark enough for 12–13px UI copy (~7:1 on card) */
+    --muted-foreground: 28 14% 28%;
 
-    --accent: 210 76% 42%;             /* #1A6EBF */
-    --accent-foreground: 0 0% 100%;
-    --accent-soft: 209 80% 94%;        /* #E6F1FB */
+    /* Terracotta / rust accent — complements warm neutrals */
+    --accent: 18 72% 40%;
+    --accent-foreground: 40 40% 99%;
+    --accent-soft: 24 78% 94%;
 
-    --success: 161 70% 36%;            /* #1D9E75 */
-    --success-foreground: 0 0% 100%;
-    --success-soft: 158 60% 92%;       /* #E1F5EE */
+    --success: 152 55% 30%;
+    --success-foreground: 40 40% 99%;
+    --success-soft: 150 45% 90%;
 
-    --warning: 32 78% 41%;             /* #BA7517 */
-    --warning-foreground: 0 0% 100%;
-    --warning-soft: 38 80% 92%;        /* #FAEEDA */
+    --warning: 32 92% 36%;
+    --warning-foreground: 28 32% 11%;
+    --warning-soft: 36 90% 90%;
 
-    --danger: 6 65% 46%;               /* #C0392B */
-    --danger-foreground: 0 0% 100%;
-    --danger-soft: 6 80% 95%;          /* #FCEBEB */
+    --danger: 0 70% 40%;
+    --danger-foreground: 40 40% 99%;
+    --danger-soft: 0 75% 95%;
 
-    --destructive: 6 65% 46%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 40 40% 99%;
 
-    --border: 210 22% 88%;             /* hairline */
-    --input: 210 22% 88%;
-    --ring: 210 76% 42%;
+    --border: 32 14% 74%;
+    --input: 32 14% 74%;
+    --ring: 18 72% 40%;
 
-    --radius: 0.625rem;                /* 10px */
-    --radius-sm: 0.375rem;             /* 6px */
-    --radius-lg: 0.875rem;             /* 14px */
+    --radius: 0.625rem;
+    --radius-sm: 0.375rem;
+    --radius-lg: 0.875rem;
 
-    /* Sidebar */
-    --sidebar-background: 211 35% 17%;
-    --sidebar-foreground: 210 22% 83%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 211 35% 17%;
-    --sidebar-accent: 212 31% 22%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 212 31% 22%;
-    --sidebar-ring: 210 76% 42%;
+    /* Warm charcoal sidebar */
+    --sidebar-background: 28 28% 9%;
+    --sidebar-foreground: 38 18% 88%;
+    --sidebar-primary: 40 40% 99%;
+    --sidebar-primary-foreground: 28 32% 11%;
+    --sidebar-accent: 28 22% 15%;
+    --sidebar-accent-foreground: 40 40% 99%;
+    --sidebar-border: 28 22% 15%;
+    --sidebar-ring: 18 72% 48%;
+
+    /* Charts: warm revenue vs deep neutral spend */
+    --chart-revenue: 18 70% 42%;
+    --chart-expense: 28 18% 30%;
+    --chart-grid: 32 12% 80%;
   }
 }
 
@@ -101,17 +109,20 @@
   .text-section { font-size: 18px; font-weight: 500; letter-spacing: -0.005em; line-height: 1.3; }
   .type-card    { font-size: 14px; font-weight: 500; }
   .text-body    { font-size: 13px; font-weight: 400; }
-  .text-label   { font-size: 12px; font-weight: 400; color: hsl(var(--muted-foreground)); }
-  .text-hint    { font-size: 11px; font-weight: 400; color: hsl(var(--steel-300)); }
+  .text-label   { font-size: 12px; font-weight: 500; color: hsl(var(--slate-700)); }
+  .text-hint    { font-size: 11px; font-weight: 400; color: hsl(var(--slate-500)); }
   .text-metric  { font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
 
-  /* Surfaces */
+  /* Surfaces — cards lift off the canvas */
   .surface-card {
     @apply bg-card rounded-[14px];
-    border: 0.5px solid hsl(var(--border));
+    border: 1px solid hsl(var(--border));
+    box-shadow:
+      0 1px 2px hsl(28 30% 8% / 0.07),
+      0 4px 14px hsl(28 30% 8% / 0.06);
   }
   .surface-metric {
-    @apply rounded-[10px] bg-secondary;
+    @apply rounded-[10px] border border-border/80 bg-secondary;
   }
   .hairline { border: 0.5px solid hsl(var(--border)); }
   .hairline-b { border-bottom: 0.5px solid hsl(var(--border)); }

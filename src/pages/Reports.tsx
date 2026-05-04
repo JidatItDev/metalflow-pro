@@ -81,14 +81,14 @@ export default function Reports() {
           <div className="h-64">
             <ResponsiveContainer>
               <BarChart data={budgetVsActual} margin={{ top: 10, right: 8, left: -8, bottom: 0 }}>
-                <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="2 4" vertical={false} />
+                <CartesianGrid stroke="hsl(var(--chart-grid))" strokeDasharray="2 4" vertical={false} />
                 <XAxis dataKey="name" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false}
                   tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12 }} />
+                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12, background: "hsl(var(--card))" }} />
                 <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
-                <Bar dataKey="Estimated" fill="hsl(var(--steel-300))" radius={[6, 6, 0, 0]} maxBarSize={28} />
-                <Bar dataKey="Actual" fill="hsl(var(--accent))" radius={[6, 6, 0, 0]} maxBarSize={28} />
+                <Bar dataKey="Estimated" fill="hsl(var(--chart-expense))" radius={[6, 6, 0, 0]} maxBarSize={28} />
+                <Bar dataKey="Actual" fill="hsl(var(--chart-revenue))" radius={[6, 6, 0, 0]} maxBarSize={28} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -99,11 +99,11 @@ export default function Reports() {
           <div className="h-64">
             <ResponsiveContainer>
               <BarChart data={labourBreakdown} layout="vertical" margin={{ top: 10, right: 16, left: 0, bottom: 0 }}>
-                <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="2 4" horizontal={false} />
+                <CartesianGrid stroke="hsl(var(--chart-grid))" strokeDasharray="2 4" horizontal={false} />
                 <XAxis type="number" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false}
                   tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
                 <YAxis dataKey="name" type="category" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} width={70} />
-                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12 }} />
+                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12, background: "hsl(var(--card))" }} />
                 <Bar dataKey="cost" fill="hsl(var(--warning))" radius={[0, 6, 6, 0]} maxBarSize={20} />
               </BarChart>
             </ResponsiveContainer>
@@ -115,14 +115,14 @@ export default function Reports() {
           <div className="h-64">
             <ResponsiveContainer>
               <LineChart data={monthly} margin={{ top: 10, right: 8, left: -8, bottom: 0 }}>
-                <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="2 4" vertical={false} />
+                <CartesianGrid stroke="hsl(var(--chart-grid))" strokeDasharray="2 4" vertical={false} />
                 <XAxis dataKey="month" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false}
                   tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12 }} />
+                <Tooltip formatter={(v: number) => fmtCurrency(v)} contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12, background: "hsl(var(--card))" }} />
                 <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
-                <Line type="monotone" dataKey="Revenue" stroke="hsl(var(--accent))" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="Expenses" stroke="hsl(var(--slate-700))" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="Revenue" stroke="hsl(var(--chart-revenue))" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="Expenses" stroke="hsl(var(--chart-expense))" strokeWidth={2} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>

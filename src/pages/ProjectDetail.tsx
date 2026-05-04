@@ -148,32 +148,9 @@ export default function ProjectDetail() {
         {/* MATERIALS */}
         <TabsContent value="materials">
           <div className="surface-card overflow-hidden">
-            <div className="p-5 hairline-b flex items-center justify-between">
-              <div>
-                <h2 className="text-section">Materials & procurement</h2>
-                <p className="text-label mt-0.5">Tap a row to record purchases</p>
-              </div>
-              <Dialog open={matDlg} onOpenChange={setMatDlg}>
-                <DialogTrigger asChild><Button size="sm" variant="outline"><Plus className="w-3.5 h-3.5 mr-1" /> Add material</Button></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader><DialogTitle>Add material</DialogTitle></DialogHeader>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="col-span-2 space-y-1.5"><Label>Name</Label><Input value={newMat.name} onChange={e => setNewMat({ ...newMat, name: e.target.value })} /></div>
-                    <div className="space-y-1.5"><Label>Unit</Label><Input value={newMat.unit} onChange={e => setNewMat({ ...newMat, unit: e.target.value })} /></div>
-                    <div className="space-y-1.5"><Label>Estimated qty</Label><Input type="number" value={newMat.quantity} onChange={e => setNewMat({ ...newMat, quantity: Number(e.target.value) })} /></div>
-                    <div className="col-span-2 space-y-1.5"><Label>Estimated rate</Label><Input type="number" value={newMat.rate} onChange={e => setNewMat({ ...newMat, rate: Number(e.target.value) })} /></div>
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setMatDlg(false)}>Cancel</Button>
-                    <Button onClick={() => {
-                      if (!newMat.name) { toast.error("Name required"); return; }
-                      addProjectMaterial(project.id, newMat);
-                      setNewMat({ name: "", unit: "pcs", quantity: 0, rate: 0 }); setMatDlg(false);
-                      toast.success("Material added");
-                    }}>Add</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+            <div className="p-5 hairline-b">
+              <h2 className="text-section">Materials & procurement</h2>
+              <p className="text-label mt-0.5">Tap a row to record purchases</p>
             </div>
 
             {/* Desktop list */}
@@ -238,7 +215,34 @@ export default function ProjectDetail() {
                 );
               })}
             </div>
+
+            <div className="p-4 md:px-5 md:py-4 flex justify-end hairline-t bg-secondary/30">
+              <Button size="sm" variant="outline" onClick={() => setMatDlg(true)}>
+                <Plus className="w-3.5 h-3.5 mr-1" /> Add material
+              </Button>
+            </div>
           </div>
+
+          <Dialog open={matDlg} onOpenChange={setMatDlg}>
+            <DialogContent>
+              <DialogHeader><DialogTitle>Add material</DialogTitle></DialogHeader>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="col-span-2 space-y-1.5"><Label>Name</Label><Input value={newMat.name} onChange={e => setNewMat({ ...newMat, name: e.target.value })} /></div>
+                <div className="space-y-1.5"><Label>Unit</Label><Input value={newMat.unit} onChange={e => setNewMat({ ...newMat, unit: e.target.value })} /></div>
+                <div className="space-y-1.5"><Label>Estimated qty</Label><Input type="number" value={newMat.quantity} onChange={e => setNewMat({ ...newMat, quantity: Number(e.target.value) })} /></div>
+                <div className="col-span-2 space-y-1.5"><Label>Estimated rate</Label><Input type="number" value={newMat.rate} onChange={e => setNewMat({ ...newMat, rate: Number(e.target.value) })} /></div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setMatDlg(false)}>Cancel</Button>
+                <Button onClick={() => {
+                  if (!newMat.name) { toast.error("Name required"); return; }
+                  addProjectMaterial(project.id, newMat);
+                  setNewMat({ name: "", unit: "pcs", quantity: 0, rate: 0 }); setMatDlg(false);
+                  toast.success("Material added");
+                }}>Add</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         {/* LABOUR */}

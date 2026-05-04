@@ -11,7 +11,6 @@ import TenderDetail from "./pages/TenderDetail";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Procurement from "./pages/Procurement";
-import Workers from "./pages/Workers";
 import Labour from "./pages/Labour";
 import Expenses from "./pages/Expenses";
 import Reports from "./pages/Reports";
@@ -34,8 +33,9 @@ const App = () => (
             <Route path="/tenders/:id" element={<TenderDetail />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
+            {/* Procurement page kept for direct URLs; not linked from main nav */}
             <Route path="/procurement" element={<Procurement />} />
-            <Route path="/workers" element={<Workers />} />
+            <Route path="/workers" element={<Navigate to="/labour?tab=team" replace />} />
             <Route path="/labour" element={<Labour />} />
             <Route path="/expenses" element={<Expenses />} />
             <Route path="/reports" element={<Reports />} />

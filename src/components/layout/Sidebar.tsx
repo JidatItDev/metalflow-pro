@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
-  LayoutDashboard, FileText, FolderKanban, PackageSearch,
-  HardHat, Hammer, Receipt, BarChart3, Settings, Layers,
+  LayoutDashboard, FileText, FolderKanban,
+  Hammer, Receipt, BarChart3, Settings, Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useStore } from "@/lib/store";
@@ -10,8 +10,7 @@ export const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/tenders", label: "Tenders", icon: FileText },
   { to: "/projects", label: "Projects", icon: FolderKanban },
-  { to: "/procurement", label: "Procurement", icon: PackageSearch },
-  { to: "/workers", label: "Workers", icon: HardHat },
+  // Procurement: hidden from nav; route /procurement still available in App.tsx
   { to: "/labour", label: "Labour", icon: Hammer },
   { to: "/expenses", label: "Expenses", icon: Receipt },
   { to: "/reports", label: "Reports", icon: BarChart3 },

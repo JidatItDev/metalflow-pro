@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { LayoutDashboard, FileText, FolderKanban, PackageSearch, MoreHorizontal } from "lucide-react";
+import { LayoutDashboard, FileText, FolderKanban, Receipt, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -9,7 +9,7 @@ const primary = [
   { to: "/", label: "Home", icon: LayoutDashboard, end: true },
   { to: "/tenders", label: "Tenders", icon: FileText },
   { to: "/projects", label: "Projects", icon: FolderKanban },
-  { to: "/procurement", label: "Procure", icon: PackageSearch },
+  { to: "/expenses", label: "Expenses", icon: Receipt },
 ];
 
 export function MobileNav() {

@@ -1,4 +1,4 @@
-import { Bell, Search, Plus, LogOut } from "lucide-react";
+import { Bell, Plus, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/lib/store";
 import {
@@ -26,22 +26,10 @@ export function Topbar() {
 
   return (
     <header className="h-16 sticky top-0 z-30 bg-background/85 backdrop-blur hairline-b">
-      <div className="h-full px-4 lg:px-8 flex items-center gap-3">
-        <div className="flex-1 max-w-md relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-steel-300" />
-          <input
-            type="search"
-            placeholder="Search tenders, projects, materials…"
-            className="w-full h-9 pl-9 pr-3 rounded-md bg-white text-body placeholder:text-steel-300 outline-none focus:ring-2 focus:ring-accent/30"
-            style={{ border: "0.5px solid hsl(var(--border))" }}
-          />
-        </div>
-
-        <div className="hidden sm:flex items-center gap-2">
-          <Button size="sm" variant="outline" onClick={() => navigate("/tenders/new")}>
-            <Plus className="w-4 h-4 mr-1.5" /> New Tender
-          </Button>
-        </div>
+      <div className="h-full px-4 lg:px-8 flex items-center justify-end gap-2 sm:gap-3">
+        <Button size="sm" variant="outline" onClick={() => navigate("/tenders/new")}>
+          <Plus className="w-4 h-4 mr-1.5" /> New Tender
+        </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -59,9 +47,9 @@ export function Topbar() {
               <div className="px-3 py-6 text-center text-label">All clear. Nothing new.</div>
             )}
             {overCount > 0 && (
-              <DropdownMenuItem onClick={() => navigate("/procurement")} className="flex flex-col items-start gap-0.5 cursor-pointer">
+              <DropdownMenuItem onClick={() => navigate("/projects")} className="flex flex-col items-start gap-0.5 cursor-pointer">
                 <span className="text-body font-medium">{overCount} material{overCount > 1 ? "s" : ""} over-purchased</span>
-                <span className="text-2xs text-muted-foreground">Review procurement and reconcile.</span>
+                <span className="text-2xs text-muted-foreground">Open projects and reconcile purchases.</span>
               </DropdownMenuItem>
             )}
             {submittedCount > 0 && (

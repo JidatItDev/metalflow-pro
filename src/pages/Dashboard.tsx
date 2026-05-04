@@ -10,7 +10,7 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend,
 } from "recharts";
 import {
-  TrendingUp, Wallet, Briefcase, AlertTriangle, ArrowRight, Plus, FileText, PackageSearch, HardHat,
+  TrendingUp, Wallet, Briefcase, AlertTriangle, ArrowRight, Plus, FileText, FolderKanban, HardHat,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -103,18 +103,18 @@ export default function Dashboard() {
           <div className="h-72">
             <ResponsiveContainer>
               <BarChart data={monthly} margin={{ top: 10, right: 8, left: -8, bottom: 0 }}>
-                <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="2 4" vertical={false} />
+                <CartesianGrid stroke="hsl(var(--chart-grid))" strokeDasharray="2 4" vertical={false} />
                 <XAxis dataKey="month" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false}
                   tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
                 <Tooltip
-                  cursor={{ fill: "hsl(var(--secondary))" }}
-                  contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12 }}
+                  cursor={{ fill: "hsl(var(--accent-soft) / 0.5)" }}
+                  contentStyle={{ borderRadius: 8, border: "0.5px solid hsl(var(--border))", fontSize: 12, background: "hsl(var(--card))" }}
                   formatter={(v: number) => fmtCurrency(v)}
                 />
                 <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
-                <Bar dataKey="Revenue" fill="hsl(var(--accent))" radius={[6, 6, 0, 0]} maxBarSize={28} />
-                <Bar dataKey="Expenses" fill="hsl(var(--slate-700))" radius={[6, 6, 0, 0]} maxBarSize={28} />
+                <Bar dataKey="Revenue" fill="hsl(var(--chart-revenue))" radius={[6, 6, 0, 0]} maxBarSize={28} />
+                <Bar dataKey="Expenses" fill="hsl(var(--chart-expense))" radius={[6, 6, 0, 0]} maxBarSize={28} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -203,7 +203,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           { label: "New tender", icon: FileText, to: "/tenders/new" },
-          { label: "Add purchase", icon: PackageSearch, to: "/procurement" },
+          { label: "Open projects", icon: FolderKanban, to: "/projects" },
           { label: "Assign worker", icon: HardHat, to: "/labour" },
           { label: "Log expense", icon: Wallet, to: "/expenses" },
         ].map(qa => (
